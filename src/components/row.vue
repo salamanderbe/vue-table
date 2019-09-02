@@ -109,7 +109,7 @@
         font-size: 80%;
         margin-top: auto;
         margin-bottom: auto;
-        background: #0f3261;
+        background: var(--salamander-theme-primary);
         color: #e6ebf1;
         padding: 4px 8px;
         border-radius: 3px;
@@ -154,7 +154,7 @@
                 {{ displayDate(data[value.key])}}
             </div>
 
-            <svg v-if="value.type === 'boolean' && data[value.key]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="extra" class="boolean-check">
+            <svg v-if="value.type === 'boolean' && data[value.key]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="extra" class="boolean-check success">
                 <g>
                     <g>
                         <g>
@@ -163,7 +163,7 @@
                     </g>
                 </g>
             </svg>
-            <svg v-if="value.type === 'boolean' && !data[value.key]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="extra" class="boolean-check">
+            <svg v-if="value.type === 'boolean' && !data[value.key]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="extra" class="boolean-check error">
                 <g>
                     <g>
                         <g>

@@ -1,105 +1,38 @@
 <style lang="scss" scoped>
-.table-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-flow: column;
-    border: 1px solid #e6eaee;
-}
-.table-filter {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 0 8px 16px;
-}
-.alter-table-columns {
-    border-radius: 2px;
-    border: 1px solid #e6eaee;
-    background-color: #ffffff;
-    width: 225px;
-    position: absolute;
-    right: 0;
-    padding: 16px 4px;
-    z-index: 1;
-    .item {
-        padding: 10px 16px;
-        color: #0f3261;
-        &:hover {
-            background-color: rgba(15, 50, 97, 0.05);
-        }
-    }
-}
-.small {
-    font-size: 80%;
-}
-.c-pointer {
-    cursor: pointer;
-}
-</style>
-
-<style lang="scss">
 .salamander-table {
-    @import "~pretty-checkbox/src/pretty-checkbox.scss";
-    .sort-icon {
-        height: 8px;
-        width: auto;
-        margin-left: 8px;
-
-        .top,
-        .bottom {
-            opacity: 0.5;
-        }
-        &.asc {
-            .top {
-                opacity: 0;
-            }
-            .bottom {
-                opacity: 1;
-            }
-        }
-        &.desc {
-            .top {
-                opacity: 1;
-            }
-            .bottom {
-                opacity: 0;
-            }
-        }
-    }
-    .vue-table-checkmark-icon {
+    /*
+    | TABLE
+    | ___________________
+    */
+    .table-container {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 20px;
-
-        &::after {
-            content: "";
-            display: block;
-            width: 6px;
-            height: 11px;
-            margin-top: -4px;
-            border: solid #fff;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
+        flex-wrap: wrap;
+        flex-flow: column;
+        border: 1px solid #e6eaee;
     }
-    .p-jelly {
-        margin-right: 0;
-        &.text-wrap {
-            .state {
-                padding-left: 25px;
-                .svg {
-                    top: 0;
-                }
-                label {
-                    text-indent: 0;
-                    &:before,
-                    &:after {
-                        top: 0;
-                    }
-                }
+    .table-filter {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 0 8px 16px;
+    }
+    .alter-table-columns {
+        border-radius: 2px;
+        border: 1px solid #e6eaee;
+        background-color: #ffffff;
+        width: 225px;
+        position: absolute;
+        right: 0;
+        padding: 16px 4px;
+        z-index: 1;
+        .item {
+            padding: 10px 16px;
+            color: #0f3261;
+            &:hover {
+                background-color: rgba(15, 50, 97, 0.05);
             }
         }
     }
-    .table-cell {
+    /deep/ .table-cell {
         &:not(.table-edit) {
             text-overflow: ellipsis;
             overflow: hidden;
@@ -152,20 +85,129 @@
             width: 100%;
         }
     }
-    .table-header {
+    /deep/ .table-header {
         .table-check {
             margin-bottom: auto;
             margin-top: auto;
             margin-right: 0;
         }
     }
-    .table-edit {
+    /deep/ .table-edit {
         .table-check {
             margin-bottom: auto;
             margin-top: auto;
             margin-right: auto;
             width: 100%;
             text-align: left;
+        }
+    }
+
+    /*
+    | HELPERS
+    | ___________________
+    */
+    .small {
+        font-size: 80%;
+    }
+    .c-pointer {
+        cursor: pointer;
+    }
+
+    /*
+    | ICONS
+    | ___________________
+    */
+    .sort-icon {
+        height: 8px;
+        width: auto;
+        margin-left: 8px;
+
+        .top,
+        .bottom {
+            opacity: 0.5;
+        }
+        &.asc {
+            .top {
+                opacity: 0;
+            }
+            .bottom {
+                opacity: 1;
+            }
+        }
+        &.desc {
+            .top {
+                opacity: 1;
+            }
+            .bottom {
+                opacity: 0;
+            }
+        }
+    }
+    /deep/ .vue-table-checkmark-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+
+        &::after {
+            content: "";
+            display: block;
+            width: 6px;
+            height: 11px;
+            margin-top: -4px;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    }
+    /deep/ .boolean-check {
+        &.success {
+            path {
+                fill: var(--salamander-theme-success);
+            }
+        }
+        &.error {
+            path {
+                fill: var(--salamander-theme-error);
+            }
+        }
+    }
+}
+</style>
+
+<style lang="scss">
+:root {
+    --salamander-theme-primary: #0f3261;
+    --salamander-theme-success: #95c9a3;
+    --salamander-theme-warning: #ff8f00;
+    --salamander-theme-error: #ff2d55;
+}
+.salamander-table {
+    /*
+    | LIBRARIES
+    | ___________________
+    */
+    @import "~pretty-checkbox/src/pretty-checkbox.scss";
+    .p-jelly {
+        margin-right: 0;
+        &.text-wrap {
+            .state {
+                padding-left: 25px;
+                .svg {
+                    top: 0;
+                }
+                label {
+                    text-indent: 0;
+                    &:before,
+                    &:after {
+                        top: 0;
+                    }
+                }
+            }
+        }
+        input:checked ~ .state.p-primary label:after,
+        .salamander-table .pretty.p-toggle .state.p-primary label:after {
+            background-color: var(--salamander-theme-primary) !important;
         }
     }
 }
@@ -192,20 +234,17 @@
                                 <path class="bottom" fill="#0f3261" d="M4.633 3c.391 0 .485-.248.207-.559L2.752.116a.333.333 0 0 0-.505 0L.16 2.44C-.118 2.75-.024 3 .366 3z" />
                             </g>
                         </svg>
-                        <!--                         
-                            <i-sort ></i-sort>
-                        -->
                     </span>
                     <span v-else>
                         {{ value.label }}
                     </span>
                 </span>
             </div>
-            <div v-if="editable" class="table-cell table-edit" v-click-outside="() => { showAlterTableColumns = false  }" @click="showAlterTableColumns = !showAlterTableColumns">
+            <div class="table-cell table-edit" v-click-outside="() => { showAlterTableColumns = false  }" @click="showAlterTableColumns = !showAlterTableColumns">
                 <span class="change-columns">Change</span>
                 <div @click.stop v-if="showAlterTableColumns" class="alter-table-columns">
                     <div class="item" v-for="( item, item_index) in structure.filter((s) => s.label )" :key="item_index">
-                        <p-check v-model="item.visible" class="p-curve p-svg p-jelly table-check" color="success" name="check">
+                        <p-check v-model="item.visible" class="p-curve p-svg p-jelly table-check" color="primary" name="check">
                             <span slot="extra" class="vue-table-checkmark-icon svg svg-icon"></span>
                             {{ item.label }}
                         </p-check>
@@ -216,7 +255,7 @@
 
         <!-- Content -->
         <div class="table-container">
-            <el-row v-for="(row, index) in filteredRows" :key="index" :data="row" :structure="structure" :class="{ 'can-hover' : detail !== '' }" @click="goToRow(row.id)" :editable="editable"></el-row>
+            <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detail !== '' }" @click="goToRow(row.id)" :editable="editable"></el-row>
         </div>
 
         <!-- Footer -->
@@ -252,8 +291,17 @@ export default {
         },
         editable: {
             type: Boolean,
-            default: true
+            default: false
         },
+        theme: {
+            default: () => (
+                {
+                    primary: '#0f3261',
+                    success: 'green',
+                    error: '#f72d55'
+                }
+            )
+        }
     },
     data: () => ({
         selected: false,
@@ -264,6 +312,15 @@ export default {
     }),
     mounted() {
         this.localRows = this.rows
+        let root = document.documentElement;
+        if (this.theme.primary && this.theme.primary)
+            root.style.setProperty('--salamander-theme-primary', this.theme.primary);
+        if (this.theme.primary && this.theme.success)
+            root.style.setProperty('--salamander-theme-success', this.theme.success);
+        if (this.theme.primary && this.theme.warning)
+            root.style.setProperty('--salamander-theme-warning', this.theme.warning);
+        if (this.theme.primary && this.theme.danger)
+            root.style.setProperty('--salamander-theme-danger', this.theme.danger);
     },
     methods: {
         goToRow(id) {
@@ -281,12 +338,27 @@ export default {
                 })
             else rows = this.localRows
 
+
             if (this.order) {
                 if (this.order.type === 'text')
                     rows.sort((a, b) => {
-                        if (a[this.order.column] < b[this.order.column]) { return -1; }
-                        if (a[this.order.column] > b[this.order.column]) { return 1; }
-                        return 0;
+                        return a[this.order.column].localeCompare(b[this.order.column]);
+                    })
+                if (this.order.type === 'number')
+                    rows.sort((a, b) => {
+                        return a[this.order.column] - b[this.order.column];
+                    })
+                if (this.order.type === 'user')
+                    rows.sort((a, b) => {
+                        return a.first_name.localeCompare(b.first_name);
+                    })
+                if (this.order.type === 'date')
+                    rows.sort((a, b) => {
+                        return new Date(a[this.order.column]) - new Date(b[this.order.column]);
+                    })
+                if (this.order.type === 'boolean')
+                    rows.sort((a, b) => {
+                        return a[this.order.column] - b[this.order.column];
                     })
 
                 if (this.order.asc) rows.reverse()
@@ -296,19 +368,19 @@ export default {
         }
     },
     watch: {
-        rows: function() {
+        rows: function () {
             this.localRows = this.rows
         },
-        selected: function() {
+        selected: function () {
             let value = this.selected
-            this.localRows.forEach(function(row, index) {
-                this[index].selected = value
-            }, this.localRows)
+            this.localRows.forEach(function (row, index) {
+                row.selected = value
+            })
         }
     },
     directives: {
         'click-outside': {
-            bind: function(el, binding) {
+            bind: function (el, binding) {
                 // Define Handler and cache it on the element
                 const bubble = binding.modifiers.bubble
                 const handler = (e) => {
@@ -322,7 +394,7 @@ export default {
                 document.getElementById('app').addEventListener('click', handler, true)
             },
 
-            unbind: function(el) {
+            unbind: function (el) {
                 // Remove Event Listeners
                 document.getElementById('app').removeEventListener('click', el.__vueClickOutside__)
                 el.__vueClickOutside__ = null
