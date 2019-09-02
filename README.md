@@ -1,7 +1,15 @@
 # Vue table
-WIP
+A simple styled table for Vue
 
 ### Features & characteristics:
+
+-  Customizable columns
+-  Customizable theme
+-  Sortable tables
+
+### Demo
+
+https://salamanderbe.github.io/vue-table
 
 
 ## Install & basic usage
