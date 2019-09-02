@@ -27,6 +27,7 @@ npm install @salamander.be/vue-table
 
 <script>
 import ElTable from @salamander.be/vue-table
+import '@salamander.be/vue-table/dist/vue-table.css'
 
 export default {
 name: 'app',
