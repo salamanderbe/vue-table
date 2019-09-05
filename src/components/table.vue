@@ -255,7 +255,11 @@
 
         <!-- Content -->
         <div class="table-container">
-            <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detail !== '' }" @click="goToRow(row.id)" :editable="editable"></el-row>
+            <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detail !== '' }" @click="goToRow(row.id)" :editable="editable">
+                <template v-for="col in structure.filter((c) => c.type === 'slot')" v-slot:[col.key]>
+                    <slot :name="col.key" v-bind:row="row"></slot>
+                </template>
+            </el-row>
         </div>
 
         <!-- Footer -->
