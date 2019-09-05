@@ -154,6 +154,10 @@
                 {{ displayDate(data[value.key])}}
             </div>
 
+            <div v-if="value.type === 'slot'" class="small my-auto">
+                <slot :name="value.key"></slot>
+            </div>
+
             <svg v-if="value.type === 'boolean' && data[value.key]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" slot="extra" class="boolean-check success">
                 <g>
                     <g>

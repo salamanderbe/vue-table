@@ -19,7 +19,11 @@ html {
 
 <template>
     <div id="app" style="padding: 100px;">
-        <el-table :rows="rows" :structure="structure"></el-table>
+        <el-table :rows="rows" :structure="structure">
+            <template v-slot:link="slotProps">
+                <a @click="handleClick" href="#">Click me!</a>
+            </template>
+        </el-table>
     </div>
 </template>
 
@@ -30,6 +34,12 @@ export default {
     name: 'app',
 
     components: { ElTable },
+
+    methods: {
+        handleClick() {
+            alert('Hi!');
+        }
+    },
 
     data: () => ({
         rows: [
@@ -44,6 +54,7 @@ export default {
             { visible: true, label: 'Active.', type: 'boolean', key: 'active', sortable: true, size: 'xsmall' },
             { visible: true, label: 'Labels.', type: 'labels', key: 'labels', sortable: true, size: 'normal' },
             { visible: true, label: 'Registered', type: 'date', key: 'registered', sortable: true, size: 'small' },
+            { visible: true, label: 'Link', type: 'slot', key: 'link', size: 'normal' },
         ]
     })
 }
