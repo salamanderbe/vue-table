@@ -3,7 +3,7 @@
 	"description": "A VueJs table component.",
 	"author": "Frederiek <frederiek@salamander.be>",
 	"license": "MIT",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"main": "./dist/vue-table.common.js",
 	"keywords": [
 		"vue",
