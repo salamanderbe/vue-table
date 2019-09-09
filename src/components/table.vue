@@ -1,4 +1,4 @@
-<style lang="scss" scoped>
+<style lang="scss">
 .salamander-table {
     /*
     | TABLE
@@ -9,11 +9,15 @@
         flex-wrap: wrap;
         flex-flow: column;
         border: 1px solid #e6eaee;
+        overflow: auto;
     }
     .table-filter {
         display: flex;
         flex-wrap: wrap;
         margin: 0 0 8px 16px;
+        height: 20px;
+        overflow-y: hidden;
+        overflow: auto;
     }
     .alter-table-columns {
         border-radius: 2px;
@@ -32,7 +36,7 @@
             }
         }
     }
-    /deep/ .table-cell {
+    .table-cell {
         &:not(.table-edit) {
             text-overflow: ellipsis;
             overflow: hidden;
@@ -49,6 +53,12 @@
         &.type-date,
         &.size-text {
             flex: 0 0 165px;
+            > div {
+                width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
         }
         &.size-normal {
             flex: 0 0 150px !important;
@@ -85,14 +95,14 @@
             width: 100%;
         }
     }
-    /deep/ .table-header {
+    .table-header {
         .table-check {
             margin-bottom: auto;
             margin-top: auto;
             margin-right: 0;
         }
     }
-    /deep/ .table-edit {
+    .table-edit {
         .table-check {
             margin-bottom: auto;
             margin-top: auto;
@@ -147,7 +157,7 @@
             }
         }
     }
-    /deep/ .vue-table-checkmark-icon {
+    .vue-table-checkmark-icon {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -164,7 +174,7 @@
             transform: rotate(45deg);
         }
     }
-    /deep/ .boolean-check {
+    .boolean-check {
         &.success {
             path {
                 fill: var(--salamander-theme-success);
@@ -176,18 +186,134 @@
             }
         }
     }
-}
-</style>
 
-<style lang="scss">
-:root {
-    --salamander-theme-primary: #0f3261;
-    --salamander-theme-icons: #0f3261;
-    --salamander-theme-success: #95c9a3;
-    --salamander-theme-warning: #ff8f00;
-    --salamander-theme-error: #ff2d55;
-}
-.salamander-table {
+    /*
+    | ROWS
+    | ___________________
+    */
+    .table-row {
+        width: 100%;
+        padding: 0 16px;
+        display: flex;
+        flex-flow: row;
+        &.can-hover {
+            cursor: pointer;
+            transition: background 0.2s;
+            &:hover {
+                background: #f4f6f9;
+            }
+        }
+        &:not(:last-child) {
+            position: relative;
+            &:after {
+                content: "";
+                width: calc(100% - 32px);
+                position: absolute;
+                bottom: 0;
+                border-bottom: 1px solid #e6eaee;
+            }
+        }
+        .table-cell {
+            display: flex;
+            padding-top: 16px;
+            padding-bottom: 16px;
+
+            .avatar {
+                margin: auto 16px auto 0;
+            }
+            .extra {
+                box-shadow: -8px 0 12px rgba(0, 0, 0, 0.06);
+                border-radius: 3px;
+                background-color: #ffffff;
+            }
+            .label {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+            }
+            .label ~ .extra {
+                width: calc(100% - 16px - 50px);
+            }
+
+            .p-jelly {
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-right: 0;
+            }
+            .avatar {
+                border-radius: 50%;
+                border: 3px solid #fff;
+                object-fit: cover;
+                height: 24px;
+                width: 24px;
+                font-size: 8px;
+                flex: none;
+
+                &.text-avatar {
+                    color: #0f3261;
+                    text-align: center;
+                    display: flex;
+                    background: #e6ebf1;
+                    font-weight: 700;
+                    span {
+                        margin: auto;
+                    }
+                }
+            }
+            .boolean-check {
+                height: 20px;
+                width: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+            .settings-icon {
+                height: 14px;
+                width: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-left: auto;
+                cursor: pointer;
+            }
+        }
+    }
+    .small {
+        font-size: 80%;
+    }
+    .c-pointer {
+        cursor: pointer;
+    }
+    .my-auto {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    .cell-label {
+        padding: 4px 8px;
+        color: #e6ebf1;
+        background: #0f3261;
+        border-radius: 3px;
+        font-size: 80%;
+    }
+    .cell-labels {
+        display: flex;
+        flex-flow: row;
+        .label {
+            font-size: 80%;
+            margin-top: auto;
+            margin-bottom: auto;
+            background: var(--salamander-theme-primary);
+            color: #e6ebf1;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+        .label-extra {
+            font-size: 80%;
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 16px;
+            padding: 4px;
+        }
+    }
     /*
     | LIBRARIES
     | ___________________
@@ -215,6 +341,16 @@
             background-color: var(--salamander-theme-primary) !important;
         }
     }
+}
+</style>
+
+<style lang="scss">
+:root {
+    --salamander-theme-primary: #0f3261;
+    --salamander-theme-icons: #0f3261;
+    --salamander-theme-success: #95c9a3;
+    --salamander-theme-warning: #ff8f00;
+    --salamander-theme-error: #ff2d55;
 }
 </style>
 
@@ -259,7 +395,7 @@
         </div>
 
         <!-- Content -->
-        <div class="table-container">
+        <div class="table-container" :style="{ height: height }">
             <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detailed }" @click="rowClicked(row.id)" :editable="editable">
                 <template v-for="col in structure.filter((c) => c.type === 'slot')" v-slot:[col.key]>
                     <slot :name="col.key" v-bind:row="row"></slot>
@@ -281,6 +417,10 @@ export default {
         rows: {
             type: Array,
             required: true
+        },
+        height: {
+            type: String,
+            default: '600px'
         },
         structure: {
             type: Array,
