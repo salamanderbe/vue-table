@@ -21,7 +21,7 @@ html {
     <div id="app" style="padding: 100px;">
         <el-table :rows="rows" :structure="structure" :detailed="true" @row-clicked="handleRowClicked">
             <template v-slot:link="slotProps">
-                <a @click="handleClick" href="#">Click me!</a>
+                <a @click.stop="handleClick" href="#">Click me!</a>
             </template>
         </el-table>
     </div>
