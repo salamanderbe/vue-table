@@ -6,14 +6,13 @@
     */
     .table-container {
         display: flex;
-        flex-wrap: wrap;
         flex-flow: column;
         border: 1px solid #e6eaee;
         overflow: auto;
     }
     .table-filter {
         display: flex;
-        flex-wrap: wrap;
+        flex-flow: row;
         margin: 0 0 8px 16px;
         height: 20px;
         overflow-y: hidden;
@@ -44,15 +43,18 @@
         }
         &.type-select {
             flex: 0 0 30px;
+            width: 30px;
         }
         &.type-user {
             flex: 0 0 180px;
+            width: 180px;
         }
         &.type-text,
         &.type-translated,
         &.type-date,
         &.size-text {
             flex: 0 0 165px;
+            width: 165px;
             > div {
                 width: 100%;
                 text-overflow: ellipsis;
@@ -62,12 +64,15 @@
         }
         &.size-normal {
             flex: 0 0 150px !important;
+            width: 150px;
         }
         &.size-small {
             flex: 0 0 120px !important;
+            width: 120px;
         }
         &.size-xsmall {
             flex: 0 0 90px !important;
+            width: 90px;
         }
         &:not(:first-child) {
             padding: 0 8px;
@@ -395,7 +400,7 @@
         </div>
 
         <!-- Content -->
-        <div class="table-container" :style="{ height: height }">
+        <div class="table-container" :style="{ 'max-height': height }">
             <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detailed }" @click="rowClicked(row.id)" :editable="editable">
                 <template v-for="col in structure.filter((c) => c.type === 'slot')" v-slot:[col.key]>
                     <slot :name="col.key" v-bind:row="row"></slot>
