@@ -77,7 +77,7 @@
             cursor: pointer;
             margin-left: auto;
             margin-right: auto;
-            color: #0f3261;
+            color: var(--salamander-theme-icons);
             font-size: 80%;
         }
         .item {
@@ -121,6 +121,10 @@
         height: 8px;
         width: auto;
         margin-left: 8px;
+
+        path {
+            fill: var(--salamander-theme-icons);
+        }
 
         .top,
         .bottom {
@@ -178,6 +182,7 @@
 <style lang="scss">
 :root {
     --salamander-theme-primary: #0f3261;
+    --salamander-theme-icons: #0f3261;
     --salamander-theme-success: #95c9a3;
     --salamander-theme-warning: #ff8f00;
     --salamander-theme-error: #ff2d55;
@@ -255,7 +260,7 @@
 
         <!-- Content -->
         <div class="table-container">
-            <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detail !== '' }" @click="goToRow(row.id)" :editable="editable">
+            <el-row v-for="(row, index) in filteredRows" :key="`${index}${(row.selected) ? '_selected': ''}`" :data="row" :structure="structure" :class="{ 'can-hover' : detailed }" @click="rowClicked(row.id)" :editable="editable">
                 <template v-for="col in structure.filter((c) => c.type === 'slot')" v-slot:[col.key]>
                     <slot :name="col.key" v-bind:row="row"></slot>
                 </template>
@@ -281,10 +286,10 @@ export default {
             type: Array,
             require: true
         },
-        detail: {
-            type: String,
+        detailed: {
+            type: Boolean,
             require: false,
-            default: ''
+            default: false
         },
         searchable: {
             type: Array,
@@ -302,7 +307,8 @@ export default {
                 {
                     primary: '#0f3261',
                     success: 'green',
-                    error: '#f72d55'
+                    error: '#f72d55',
+                    icons: '#0f3261'
                 }
             )
         }
@@ -317,20 +323,22 @@ export default {
     mounted() {
         this.localRows = this.rows
         let root = document.documentElement;
-        if (this.theme.primary && this.theme.primary)
+        if (this.theme.primary)
             root.style.setProperty('--salamander-theme-primary', this.theme.primary);
-        if (this.theme.primary && this.theme.success)
+        if (this.theme.success)
             root.style.setProperty('--salamander-theme-success', this.theme.success);
-        if (this.theme.primary && this.theme.warning)
+        if (this.theme.warning)
             root.style.setProperty('--salamander-theme-warning', this.theme.warning);
-        if (this.theme.primary && this.theme.danger)
+        if (this.theme.danger)
             root.style.setProperty('--salamander-theme-danger', this.theme.danger);
+        if (this.theme.icons)
+            root.style.setProperty('--salamander-theme-icons', this.theme.icons);
     },
     methods: {
-        goToRow(id) {
-            if (!this.detail) return
+        rowClicked(id) {
+            if (!this.detailed) return
 
-            this.$router.push({ name: this.detail, params: { id: id } })
+            this.$emit('row-clicked', id)
         }
     },
     computed: {
@@ -346,7 +354,8 @@ export default {
             if (this.order) {
                 if (this.order.type === 'text')
                     rows.sort((a, b) => {
-                        return a[this.order.column].localeCompare(b[this.order.column]);
+                        if (a[this.order.column] && b[this.order.column])
+                            return a[this.order.column].localeCompare(b[this.order.column]);
                     })
                 if (this.order.type === 'number')
                     rows.sort((a, b) => {
@@ -354,7 +363,8 @@ export default {
                     })
                 if (this.order.type === 'user')
                     rows.sort((a, b) => {
-                        return a.first_name.localeCompare(b.first_name);
+                        if (a.first_name && b.first_name)
+                            return a.first_name.localeCompare(b.first_name);
                     })
                 if (this.order.type === 'date')
                     rows.sort((a, b) => {

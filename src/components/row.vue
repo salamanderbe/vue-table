@@ -239,7 +239,10 @@ export default {
             if (typeof this.$moment === 'function') {
                 this.$moment(date).format('DD MMM YYYY')
             }
-            return date
+
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            let d = new Date(date);
+            return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear()
         }
     }
 }

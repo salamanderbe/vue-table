@@ -19,7 +19,7 @@ html {
 
 <template>
     <div id="app" style="padding: 100px;">
-        <el-table :rows="rows" :structure="structure">
+        <el-table :rows="rows" :structure="structure" :detailed="true" @row-clicked="handleRowClicked">
             <template v-slot:link="slotProps">
                 <a @click="handleClick" href="#">Click me!</a>
             </template>
@@ -37,15 +37,18 @@ export default {
 
     methods: {
         handleClick() {
-            alert('Hi!');
+            alert('Clicked on slot content');
+        },
+        handleRowClicked(id) {
+            alert('Clicked on row with id: ' + id);
         }
     },
 
     data: () => ({
         rows: [
-            { first_name: 'Alexander', last_name: 'Salamander', email: 'alexander@salamander.be', active: true, labels: ['label 1'], registered: '2019-01-08' },
-            { first_name: 'Mr.', last_name: 'Salamander', email: 'mr@salamander.be', active: false, labels: ['label 1', 'label 2', 'label 3'], registered: '2019-01-08' },
-            { first_name: 'Mr.', last_name: 'Baldwin', email: 'baldwin@salamander.be', active: false, labels: ['label 1', 'label 2'], registered: '2019-01-08' },
+            { id: 1, first_name: 'Alexander', last_name: 'Salamander', email: 'alexander@salamander.be', active: true, labels: ['label 1'], registered: '2019-01-08' },
+            { id: 2, first_name: 'Mr.', last_name: 'Salamander', email: 'mr@salamander.be', active: false, labels: ['label 1', 'label 2', 'label 3'], registered: '2019-01-08' },
+            { id: 3, first_name: 'Mr.', last_name: 'Baldwin', email: 'baldwin@salamander.be', active: false, labels: ['label 1', 'label 2'], registered: '2019-01-08' },
         ],
         structure: [
             { visible: true, label: null, type: 'select', sortable: false },
